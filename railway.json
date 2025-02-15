@@ -1,0 +1,10 @@
+// railway.json
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "include": ["./docker-compose.railway.yml"]
+  },
+  "deploy": {
+    "startCommand": "docker-compose -f docker-compose.railway.yml up"
+  }
+}
