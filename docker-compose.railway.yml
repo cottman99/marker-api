@@ -1,0 +1,28 @@
+# docker-compose.railway.yml
+version: '3.8'
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.cpu.server
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - NUM_WORKERS=1
+      - CACHE_DIR=/data/cache
+    depends_on:
+      - redis
+    volumes:
+      - cache_volume:/data/cache
+
+volumes:
+  redis_data:
+  cache_volume:
